@@ -1,5 +1,5 @@
 # Ex.05 Design a Website for Server Side Processing
-## Date:21.11.2023
+## Date:22.11.2023
 
 ## AIM:
 To design a website to find total surface area of a square prism in server side.
@@ -37,7 +37,7 @@ math.html
 <head>
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<title> Area of Rectangle </title>
+<title> Area of a Square prism </title>
 <meta name='viewport' content='width=device-width,initial-scale=1'>
 <style type="text/css">
 body 
@@ -76,15 +76,15 @@ padding-top:15px;
 <body>
 <div class="edge">
 <div class="box">
-<h1> Area of a Rectangle </h1>
+<h1> Area of a Square Prism </h1>
 <form method="POST">
 {% csrf_token %}
 <div class="formelt">
-Length : <input type="text" name="length" value="{{l}}"> </input> (in m)
+Base : <input type="text" name="base" value="{{b}}"> </input> (in m)
 <br>
 </div>
 <div class="formelt">
-Breadth : <input type="text" name="breadth" value="{{b}}"> </input> (in m)
+Height : <input type="text" name="height" value="{{h}}"> </input> (in m)
 <br>
 </div>
 <div class="formelt">
@@ -104,22 +104,22 @@ Area : <input type="text" name="area" value="{{area}}"> </input>m<sup>2</sup>
 views.py
 
 from django.shortcuts import render
-def rectarea(request):
+def prismarea(request):
     context={}
     context['area'] = "0"
-    context['l'] = "0"
     context['b'] = "0"
+    context['h'] = "0"
     if request.method == 'POST':
         print("POST method is used")
-        l = request.POST.get('length','0')
-        b = request.POST.get('breadth','0')
+        b = request.POST.get('base','0')
+        h = request.POST.get('height','0')
         print('request=',request)
-        print('Length=',l)
-        print('Breadth=',b)
-        area = int(l) * int(b)
+        print('Base=',b)
+        print('Height=',h)
+        area = 2 * int(b) * int(b) + 4 * int(b) * int(h)
         context['area'] = area
-        context['l'] = l
         context['b'] = b
+        context['h'] = h
         print('Area=',area)
     return render(request,'mathapp/math.html',context)
 
@@ -130,19 +130,19 @@ from django.urls import path
 from mathapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('areaofrectangle/',views.rectarea,name="areaofrectangle"),
-    path('',views.rectarea,name="areaofrectangleroot")
+    path('areaofasquareprism/',views.prismarea,name="areaofasquareprism"),
+    path('',views.prismarea,name="areaofasquareprismroot")
 ]
 
 ```
 
 ## SERVER SIDE PROCESSING:
 
-![Alt text](<Screenshot 2023-11-21 191404.png>)
+![Alt text](<Screenshot 2023-11-22 093439.png>)
 
 ## HOMEPAGE:
 
-![Alt text](<Screenshot 2023-11-21 191207.png>)
+![Alt text](<Screenshot 2023-11-22 093343.png>)
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
